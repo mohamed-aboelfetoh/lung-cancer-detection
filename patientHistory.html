@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient History</title>
+    <link rel="stylesheet" href="css/pateintHistory.css">
+
+</head>
+<body>
+    <div class="container">
+        <div class="title">Patient CT scan data</div>
+        <div class="grid-container" id="patient-history">
+            <!-- Grid items will be added here -->
+        </div>
+    </div>
+
+    <!-- Update the script section of patient-history.html -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const patientHistory = document.getElementById('patient-history');
+    
+        // Retrieve patientData array from localStorage
+        const patientDataArray = JSON.parse(localStorage.getItem('patientData')) || [];
+    
+        // Loop through each entry in patientDataArray and create grid items
+        patientDataArray.forEach(patientData => {
+          const gridItem = document.createElement('div');
+          gridItem.classList.add('grid-item');
+    
+          // Set image source to base64 data
+          const imageSrc = patientData.image;
+    
+          gridItem.innerHTML = `
+            <div class="date-label">Date: ${patientData.date} <br> Time: ${patientData.time}</div>
+            <p>${patientData.name}</p>
+            <img src="${imageSrc}" alt="Patient Image">
+            <p>Prediction: ${patientData.prediction}</p>
+          `;
+          patientHistory.appendChild(gridItem);
+        });
+      });
+    </script>
+    
+  
+</body>
+</html>
