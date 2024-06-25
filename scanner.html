@@ -3,6 +3,11 @@
 <head>
   <title>Scan Page</title>
   <link rel="stylesheet" href="css/scannerCusumize.css">
+  <style>
+    .loading-indicator {
+      display: none;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -11,7 +16,8 @@
       <form id="image-form">
         <input type="text" id="full-name" name="full_name" placeholder="Full Name">
         <input type="file" id="image-input" name="file">
-        <input type="submit">
+        <input type="submit" id="submit-button">
+        <div id="loading-indicator" class="loading-indicator" >Loading...</div>
       </form>
       
       <div class="data-container">
@@ -27,6 +33,8 @@
     const responseElement = document.getElementById('response');
     const imageContainer = document.getElementById('image-container');
     const printButton = document.getElementById('print-button');
+    const submitButton = document.getElementById('submit-button');
+    const loadingIndicator = document.getElementById('loading-indicator');
   
     form.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -36,6 +44,10 @@
   
       formData.append('file', fileInput.files[0]);
       formData.append('full_name', fullName);
+  
+      // Hide submit button and show loading indicator
+      submitButton.style.display = 'none';
+      loadingIndicator.style.display = 'block';
   
       fetch('https://fastapi-lung-cancer.onrender.com/predict', {
         method: 'POST',
@@ -59,8 +71,8 @@
             <p>Name: ${fullName}</p>
             <br>
             <div class="imageContent">
-                <p>Image:</p>
-                <img src="${imageBase64}" alt="Uploaded Image">
+                
+                <pre style="display:flex;align-items:center">Image: <img src="${imageBase64}" alt="Uploaded Image"></pre>
             </div>
           `;
   
@@ -86,17 +98,23 @@
           localStorage.setItem('patientData', JSON.stringify(patientDataArray));
   
           printButton.style.display = 'block';
+  
+          // Show submit button and hide loading indicator
+          loadingIndicator.style.display = 'none';
         };
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => {
+        console.error('Error:', error);
+        
+        // Show submit button and hide loading indicator in case of error
+        submitButton.style.display = 'block';
+        loadingIndicator.style.display = 'none';
+      });
     });
   
     printButton.addEventListener('click', () => {
       window.print();
     });
   </script>
-  
-  
-
 </body>
 </html>

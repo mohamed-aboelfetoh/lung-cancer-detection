@@ -1,14 +1,16 @@
 body {
+    background: linear-gradient(to right,#358dc8,white);
+    display: flex;
+    justify-content: center;
+}
+.container {
     font-family: Arial, sans-serif;
     background-color: #fff;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 50px 25px;
-}
-.container {
-    width: 80%;
     max-width: 1000px;
+    padding: 20px;
+    border-radius: 10px;
 }
 .title {
     color: #007bff;
@@ -35,13 +37,39 @@ body {
     background-color: #fff;
     padding: 2px 5px;
     border-radius: 3px;
-    font-size: 12px;
+    font-size: 16px;
     color: #007bff;
     text-align: center;
     width: 100%;
     box-sizing: border-box;
     margin-bottom: 10px;
+    font-weight: 600;
 }
 img {
     width: 100%;
 }
+
+.date-label ~ p{
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+@media (max-width:500px){
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #fff;
+        justify-content: center;
+        align-items: center;
+        margin: 50px 25px;
+        display: flex;
+    }
+
+    .grid-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+    }
+} 
+
